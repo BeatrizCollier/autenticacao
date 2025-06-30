@@ -18,14 +18,15 @@ app.use(cors({
 app.use(express.json());
 
 //rotas de aluno
-//http:localhost:3001/cadastrar
-app.use('/', alunoRoute)
+//http:localhost:3001/api/cadastrar
+////http:localhost:3001/api/perfil
+app.use('/api/', alunoRoute)
 
 //rotas de autenticação
-//http:localhost:3001/login
-//http:localhost:3001/logout
-//http:localhost:3001/refresh-token
-app.use('/', authRoute)
+//http:localhost:3001/api/login
+//http:localhost:3001/api/logout
+//http:localhost:3001/api/refresh-token
+app.use('/api/', authRoute)
 
 const PORTA = process.env.PORTA;
 app.listen(PORTA, async () => {
@@ -33,7 +34,7 @@ app.listen(PORTA, async () => {
         await sequelize.authenticate();
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
 
-        await sequelize.sync({ force: true, alter: true });
+        await sequelize.sync({ force: false, alter: false });
         console.log('Banco de dados sincronizado com sucesso.');
     } catch (err) {
         console.error('Erro ao conectar ou sincronizar o banco de dados:', err);
